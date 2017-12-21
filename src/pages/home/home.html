@@ -1,12 +1,14 @@
 <ion-header>
-    <ion-title>Kartenverwaltung</ion-title>
+  <ion-nav-bar>
+      <ion-title>Kartenverwaltung</ion-title>
+  </ion-nav-bar>
 </ion-header>
 
 <ion-content padding="true">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content>Zum Aktuallisieren ziehen</ion-refresher-content>
   </ion-refresher>
-  <ion-list>
+  <ion-list [hidden]="cards.length === 0">
     <ion-item *ngFor="let card of cards" (click)="goToCard(card, card.id)">
       <ion-icon name="card" item-start></ion-icon>
       <h2>{{card.id}}</h2>
@@ -14,4 +16,7 @@
         <ion-badge item-end>1 EUR</ion-badge>        
     </ion-item>
   </ion-list>
+  <ion-list-header [hidden]="cards.length > 0">
+    Keine Karten registriert.
+</ion-list-header>
 </ion-content>
