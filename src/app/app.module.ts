@@ -1,0 +1,60 @@
+import { NgModule, ErrorHandler } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { MyApp } from './app.component';
+
+import { ProductdetailPage } from '../pages/productdetail/productdetail';
+import { CarddetailPage } from '../pages/carddetail/carddetail';
+import { PricelistPage } from '../pages/pricelist/pricelist';
+import { ContactPage } from '../pages/contact/contact';
+import { HomePage } from '../pages/home/home';
+import { TabsPage } from '../pages/tabs/tabs';
+
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+
+import { CacheModule } from "ionic-cache";
+import {MQTTService} from '../core/mqttservice';
+import { HttpModule } from '@angular/http';
+import { ProductData } from '../core/product-data-provider';
+
+@NgModule({
+  declarations: [
+    MyApp,
+    ProductdetailPage,
+    CarddetailPage,
+    PricelistPage,
+    ContactPage,
+    HomePage,
+    TabsPage
+  ],
+  imports: [
+    BrowserModule,
+    HttpModule,
+    IonicModule.forRoot(MyApp, {
+      links: [
+        { component: CarddetailPage, name: 'CardDetail', segment: 'card/:id' },
+        { component: ProductdetailPage, name: 'ProductDetail', segment: 'product/:id' }
+      ]
+    }),
+    CacheModule.forRoot()    
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    CarddetailPage,
+    ProductdetailPage,
+    PricelistPage,
+    ContactPage,
+    HomePage,
+    TabsPage
+  ],
+  providers: [
+    StatusBar,
+    ProductData,
+    SplashScreen,
+    MQTTService,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+  ]
+})
+export class AppModule {}

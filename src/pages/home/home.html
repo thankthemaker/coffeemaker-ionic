@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-title>Kartenverwaltung</ion-title>
+</ion-header>
+
+<ion-content padding="true">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>Zum Aktuallisieren ziehen</ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item *ngFor="let card of cards" (click)="goToCard(card, card.id)">
+      <ion-icon name="card" item-start></ion-icon>
+      <h2>{{card.id}}</h2>
+      <!--p>{{newsEntry.pubDate | date : 'dd.MM.yyyy HH:mm'}}</p-->
+        <ion-badge item-end>1 EUR</ion-badge>        
+    </ion-item>
+  </ion-list>
+</ion-content>

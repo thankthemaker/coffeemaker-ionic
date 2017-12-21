@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-title>
+      Produkte & Preise
+    </ion-title>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <!--ion-list-header>Kaffeespezialitäten</ion-list-header--> 
+        <ion-item *ngFor="let product of products" (click)="goToProduct(product.id)">
+            <ion-thumbnail item-start>
+          <img src="{{product.image}}">
+        </ion-thumbnail>
+      <h2>{{product.name}}</h2>
+      <p>{{product.description}}</p>
+      <!--button ion-button clear item-end >{{product.price/100 | number:'1.2-2' }} €</button-->
+      <ion-badge item-end class="price-badge">{{product.price/100 | number:'1.2-2' }} €</ion-badge>        
+    </ion-item>
+   </ion-list>
+</ion-content>
+
+<ion-footer>
+        <button ion-button full (click)="updatePricelist()">Preisliste aktuallisieren</button>
+  </ion-footer>
