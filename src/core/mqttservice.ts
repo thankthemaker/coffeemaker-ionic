@@ -160,4 +160,8 @@ export class MQTTService {
         //OFF
         this.publish(this.COMMAND_TOPIC, "?M1");                
       }
+
+      startOTAUpdate() {
+        this.publish(this.COMMAND_TOPIC, "UPDATE");                
+      }
 }

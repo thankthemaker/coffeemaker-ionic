@@ -39,4 +39,8 @@ export class ContactPage {
   inkassoModeOff() {
     this.mqtt.inkassoModeOff();
   }
+
+  startOTAUpdate() {
+    this.mqtt.startOTAUpdate();
+  }
 }
