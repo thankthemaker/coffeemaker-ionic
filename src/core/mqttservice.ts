@@ -6,9 +6,7 @@ declare let MqttClient: any;
 export class MQTTService {
 
     public _client: any;
-
     public _connected: boolean = false;
-
     public _prefix: string = 'application';
     public _callbacks: any = [];
 
@@ -37,22 +35,15 @@ export class MQTTService {
         });
 
         this._client.on('connect', () => {
-
             console.log('mqtt connected');
-
             this._connected = true;
-
             this._client.subscribe(`/#`);
-
             callback();
         });
 
         this._client.on('message', (topic, message) => {
-
             message = message.toString();
-
             console.log(`${topic} ${message}`);
-
             try {
                 message = JSON.parse(message);
             } catch (err) {
@@ -61,9 +52,7 @@ export class MQTTService {
 
             // notify subscribers
             this._callbacks.forEach(callbackEntry => {
-
                 if (callbackEntry.topic === topic) {
-
                     callbackEntry.callback(topic, message);
                 }
             });
@@ -74,20 +63,14 @@ export class MQTTService {
         });
 
         this._client.on('disconnect', () => {
-
             this._connected = false;
-
             this._callbacks = [];
-
             console.log('disconnect');
         });
 
         this._client.on('offline', () => {
-
             this._connected = false;
-
             this._callbacks = [];
-
             console.log('offline');
         });
 
@@ -95,7 +78,6 @@ export class MQTTService {
     }
 
     public disconnect(callback?: Function): void {
-
         if (typeof callback !== 'function') {
             callback = (err) => {
                 if (err) console.log(`MQTTService::disconnect: ${err}`);
@@ -107,20 +89,16 @@ export class MQTTService {
         }
 
         this._client.disconnect();
-
         this._callbacks = [];
-
         callback();
     }
 
     publish(topic: string, message: string, options?: any) {
-
         console.log('publish: ' + topic + ', ' + message);
         this._client.publish(topic, message, options);
     }
 
     subscribe(topic, callback) {
-
         this._callbacks.push({
             topic: topic,
             callback: callback
@@ -135,8 +113,14 @@ export class MQTTService {
         this.publish(this.COMMAND_TOPIC, "REA");                
       }
 
-      uploadPricelist() {
-        this.publish(this.COMMAND_TOPIC, "CHA100,120,120,120,120,120,140,100,100,100,1000,");
+      uploadPricelist(products: any[]) {
+        var pricelist  = "CHA";
+        products.map((data: any) => {
+            pricelist += data.price + ",";
+        });
+        pricelist += "1000,"; // Add 10,00 EUR default prepaid topup amount
+        //this.publish(this.COMMAND_TOPIC, "CHA100,120,120,120,120,120,140,100,100,100,1000,");
+        this.publish(this.COMMAND_TOPIC, pricelist);
       }
 
       registerNewCards() {

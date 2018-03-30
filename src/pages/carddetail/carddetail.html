@@ -4,6 +4,37 @@
     </ion-navbar>
   </ion-header>
   
-  <ion-content padding class="speaker-detail">
-    <h3>ID: {{card.id}}</h3>
+  <ion-content padding>
+    <h4>ID: {{card.id}}</h4>
+
+    <ion-list>
+      <ion-item>
+        <ion-label color="primary" stacked>Vorname</ion-label>
+        <ion-input type="text" [(ngModel)]="card.givenname"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label color="primary" stacked>Nachname</ion-label>
+        <ion-input type="text"[(ngModel)]="card.surname"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label color="primary" stacked>E-Mail</ion-label>
+        <ion-input type="email"[(ngModel)]="card.email"></ion-input>
+      </ion-item>
+      
+        <ion-item>
+          <ion-label color="primary" stacked>Abrechnung</ion-label>
+          <ion-select [(ngModel)]="card.paymethod">
+            <ion-option value="cash">Bar</ion-option>
+            <ion-option value="credittransfer">Überweisung</ion-option>
+            <ion-option value="paypal">Paypal</ion-option>
+            <ion-option value="paydirekt">Paydirekt</ion-option>
+          </ion-select>
+        </ion-item>
+    </ion-list>
+
   </ion-content>
+  <ion-footer>
+    <button ion-button full (click)="updateCard()">Speichern</button>
+</ion-footer>

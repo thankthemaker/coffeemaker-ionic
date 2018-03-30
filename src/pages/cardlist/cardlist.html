@@ -2,6 +2,13 @@
   <ion-navbar>
       <ion-title>Kartenverwaltung</ion-title>      
   </ion-navbar>
+  <ion-toolbar no-border-top>
+    <ion-searchbar color="primary"
+                   [(ngModel)]="queryText"
+                   (ionInput)="filterCards()"
+                   placeholder="Suchen">
+    </ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding="true">
@@ -12,8 +19,8 @@
     <ion-item *ngFor="let card of cards" (click)="goToCard(card, card.id)">
       <ion-icon name="card" item-start></ion-icon>
       <h2>{{card.id}}</h2>
-      <!--p>{{newsEntry.pubDate | date : 'dd.MM.yyyy HH:mm'}}</p-->
-        <ion-badge item-end>1 EUR</ion-badge>        
+      <p>{{card.givenname}} {{card.surname}} ({{card.email}})</p>
+      <ion-badge item-end>1 EUR</ion-badge>        
     </ion-item>
   </ion-list>
   <ion-list-header [hidden]="cards.length > 0">

@@ -6,8 +6,8 @@ import { MyApp } from './app.component';
 import { ProductdetailPage } from '../pages/productdetail/productdetail';
 import { CarddetailPage } from '../pages/carddetail/carddetail';
 import { PricelistPage } from '../pages/pricelist/pricelist';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
+import { SettingsPage } from '../pages/settings/settings';
+import { CardlistPage } from '../pages/cardlist/cardlist';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -17,6 +17,8 @@ import { CacheModule } from "ionic-cache";
 import {MQTTService} from '../core/mqttservice';
 import { HttpModule } from '@angular/http';
 import { ProductData } from '../core/product-data-provider';
+import { CardData } from '../core/card-data-provider';
+
 
 @NgModule({
   declarations: [
@@ -24,8 +26,8 @@ import { ProductData } from '../core/product-data-provider';
     ProductdetailPage,
     CarddetailPage,
     PricelistPage,
-    ContactPage,
-    HomePage,
+    SettingsPage,
+    CardlistPage,
     TabsPage
   ],
   imports: [
@@ -45,13 +47,14 @@ import { ProductData } from '../core/product-data-provider';
     CarddetailPage,
     ProductdetailPage,
     PricelistPage,
-    ContactPage,
-    HomePage,
+    SettingsPage,
+    CardlistPage,
     TabsPage
   ],
   providers: [
     StatusBar,
     ProductData,
+    CardData,
     SplashScreen,
     MQTTService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

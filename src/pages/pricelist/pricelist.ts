@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Refresher } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { ProductData } from '../../core/product-data-provider';
@@ -25,11 +25,23 @@ export class PricelistPage {
 
     updatePricelist() {
       console.log("Update pricelist requested")
-      this.mqtt.uploadPricelist();
+      this.mqtt.uploadPricelist(this.products);
     }
 
     goToProduct( id: String) {
       this.navCtrl.push(ProductdetailPage, { id: id });      
+    }
+
+    doRefresh(refresher: Refresher) {
+      this.productData.clearCache();
+      this.productData.getProducts().subscribe((data: any) => {
+        this.products = data;
+      });        setTimeout(() => {
+          refresher.complete();
+        }, 1000);
+    }
+
+    reorderItem(indexes) {
     }
 }
 

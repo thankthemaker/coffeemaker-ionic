@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
-import { CacheService } from "ionic-cache";
+import { CacheService } from 'ionic-cache';
 
 @Injectable()
 export class ProductData {
@@ -15,7 +15,7 @@ export class ProductData {
   ) {}
 
   getProducts() {
-    let url = "/assets/data/productlist.json";
+    let url = '/assets/data/productlist.json';
     let cacheKey = url;
     let request = this.http.get(url).map(res => res.json());
     return this.cache.loadFromObservable(cacheKey, request, 'products');
@@ -28,5 +28,9 @@ export class ProductData {
          return item.id === id;
        })
      });;  
+  }
+
+  clearCache() {
+    this.cache.clearGroup('products');
   }
 }
