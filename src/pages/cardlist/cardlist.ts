@@ -5,6 +5,11 @@ import { Platform } from 'ionic-angular';
 import { CarddetailPage } from '../carddetail/carddetail';
 import { CardData } from '../../core/card-data-provider';
 
+import { AuthService } from '../../app/auth.service'
+import { ModalController } from 'ionic-angular'
+import { LoginModal } from '../../modal/login/login'
+import { LogoutModal } from '../../modal/logout/logout'
+
 @Component({
   selector: 'page-cardlist',
   templateUrl: 'cardlist.html'
@@ -21,7 +26,9 @@ export class CardlistPage {
     public mqtt: MQTTService,
     public toastCtrl: ToastController,
     public platform: Platform,
-    public carddata: CardData) {
+    public carddata: CardData,
+    private auth: AuthService,
+    public modalCtrl: ModalController) {
       
       this.platform.pause.subscribe(() => {
                     console.log("Receive event: pause");
@@ -126,4 +133,11 @@ export class CardlistPage {
           return matchesQueryText;
         });
   }
+
+  openModal () {
+    let modal = this.modalCtrl.create(this.auth.isUserSignedIn() ? LogoutModal : LoginModal)
+    modal.present()
+  }
+  
+  get userColor():string { return this.auth.isUserSignedIn() ? 'secondary' : 'dark' }
 }

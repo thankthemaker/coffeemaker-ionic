@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {MQTTService} from '../../core/mqttservice';
 
+import { AuthService } from '../../app/auth.service'
+
 @Component({
   selector: 'page-settings',
   templateUrl: 'settings.html'
@@ -9,6 +11,7 @@ import {MQTTService} from '../../core/mqttservice';
 export class SettingsPage {
 
   constructor(public navCtrl: NavController,
+    private auth: AuthService,
     public mqtt: MQTTService) {
   }
 

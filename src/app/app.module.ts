@@ -19,10 +19,18 @@ import { HttpModule } from '@angular/http';
 import { ProductData } from '../core/product-data-provider';
 import { CardData } from '../core/card-data-provider';
 
+import { AwsConfig } from './app.config'
+import { AuthService, AuthServiceProvider } from './auth.service'
+import { Sigv4Http, Sigv4HttpProvider } from './sigv4.service'
+import { LoginModal } from '../modal/login/login'
+import { LogoutModal } from '../modal/logout/logout'
+
 
 @NgModule({
   declarations: [
     MyApp,
+    LoginModal,
+    LogoutModal,
     ProductdetailPage,
     CarddetailPage,
     PricelistPage,
@@ -33,7 +41,7 @@ import { CardData } from '../core/card-data-provider';
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp, {
+    IonicModule.forRoot(MyApp, new AwsConfig().load(), {
       links: [
         { component: CarddetailPage, name: 'CardDetail', segment: 'card/:id' },
         { component: ProductdetailPage, name: 'ProductDetail', segment: 'product/:id' }
@@ -44,6 +52,8 @@ import { CardData } from '../core/card-data-provider';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    LoginModal,
+    LogoutModal,
     CarddetailPage,
     ProductdetailPage,
     PricelistPage,
@@ -52,6 +62,10 @@ import { CardData } from '../core/card-data-provider';
     TabsPage
   ],
   providers: [
+    AuthService, 
+    AuthServiceProvider,
+    Sigv4Http, 
+    Sigv4HttpProvider,
     StatusBar,
     ProductData,
     CardData,

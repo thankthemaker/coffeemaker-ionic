@@ -4,11 +4,19 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content>
-    <button ion-button full (click)="inkassoModeOn()">Inkassomodus einschalten</button>
-    <button ion-button full (click)="inkassoModeOff()">Inkassomodus ausschalten</button>
-    <button ion-button full (click)="readCards()">Karten einlesen</button>
-    <button ion-button full (click)="readPricelist()">Preise einlesen</button>
-    <button ion-button full (click)="registerNewCards()">Neue Karten registrieren</button>
-    <button ion-button full color="danger" clear (click)="startOTAUpdate()">Firmwareupdate starten</button>
+<ion-content *ngIf="!auth.isUserSignedIn()">
+    <ion-card  color="light">
+        <ion-card-content>
+         Sie müssen angemeldet sein um Einstellungen verändern zu können.
+        </ion-card-content>
+    </ion-card>
+</ion-content>
+
+<ion-content *ngIf="auth.isUserSignedIn()">
+    <button ion-button full outline (click)="inkassoModeOn()">Inkassomodus einschalten</button>
+    <button ion-button full outline (click)="inkassoModeOff()">Inkassomodus ausschalten</button>
+    <button ion-button full outline (click)="readCards()">Karten einlesen</button>
+    <button ion-button full outline (click)="readPricelist()">Preise einlesen</button>
+    <button ion-button full outline (click)="registerNewCards()">Neue Karten registrieren</button>
+    <button ion-button full outline color="danger" (click)="startOTAUpdate()">Firmwareupdate starten</button>
 </ion-content>

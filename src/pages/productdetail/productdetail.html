@@ -20,7 +20,7 @@
 
     <h3>Preis: {{product?.price/100 | number:'1.2-2' }} EUR</h3>
     
-    <ion-item>
+    <ion-item *ngIf="auth.isUserSignedIn()">
         <ion-range min="0" max="100" step="5" snaps="true" [(ngModel)]="product.price">
           <ion-label range-left class="small-text">-</ion-label>
           <ion-label range-right>+</ion-label>

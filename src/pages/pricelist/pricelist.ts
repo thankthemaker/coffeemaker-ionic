@@ -6,6 +6,8 @@ import { ProductData } from '../../core/product-data-provider';
 import { ProductdetailPage } from '../productdetail/productdetail';
 import {MQTTService} from '../../core/mqttservice';
 
+import { AuthService } from '../../app/auth.service'
+
 @Component({
   selector: 'page-pricelist',
   templateUrl: 'pricelist.html'
@@ -16,6 +18,7 @@ export class PricelistPage {
 
   constructor(public http: Http, 
     public navCtrl: NavController,
+    private auth: AuthService,
     public mqtt: MQTTService,
     public productData: ProductData) {
       this.productData.getProducts().subscribe((data: any) => {

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProductData } from '../../core/product-data-provider';
 
+import { AuthService } from '../../app/auth.service'
+
 /**
  * Generated class for the ProductdetailPage page.
  *
@@ -22,6 +24,7 @@ export class ProductdetailPage {
 
   constructor(
     public navCtrl: NavController, 
+    private auth: AuthService,
     public navParams: NavParams,    
     public productData: ProductData) {
 

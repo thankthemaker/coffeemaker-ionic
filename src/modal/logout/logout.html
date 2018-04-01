@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar color="darkbar">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Dein Benutzerkonto</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="signout()" color='danger'>
+        Abmelden
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<ion-list>
+  <ion-item *ngFor="let attr of attrs">
+    <p>{{attr.getName()}}</p>
+    <h2>{{attr.getValue()}}</h2>
+  </ion-item>
+</ion-list>
+</ion-content>

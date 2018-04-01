@@ -18,6 +18,12 @@ export class CardData {
   "surname": "Pan", 
   "email": "ppan@gmx.de",
   "paymethod": "paydirekt"
+},
+{ "id": "532413413", 
+  "givenname": "Paul", 
+  "surname": "Panzer", 
+  "email": "panzer@bw.de",
+  "paymethod": "paypal"
 }];
 
   constructor(

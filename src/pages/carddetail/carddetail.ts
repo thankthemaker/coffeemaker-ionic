@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { AuthService } from '../../app/auth.service'
+
 @IonicPage({
   segment: 'card'
 })
@@ -14,6 +16,7 @@ export class CarddetailPage {
 
   constructor(
       public navCtrl: NavController, 
+      private auth: AuthService,
       public navParams: NavParams) {
     }
 
