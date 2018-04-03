@@ -42,7 +42,6 @@ export class CardlistPage {
                 });
         
                 this.connect();
-                this.cards = this.carddata.getCards();
   }
 
   connect() { 
@@ -54,7 +53,7 @@ export class CardlistPage {
                 this.mqtt.subscribe(this.RESPONSE_TOPIC, (topic: string, message: string) => {
                   console.log("Received message on topic [" + topic + "]: "  + message);
                   if(message.startsWith("CARDS:")) {
-                    this.updateProductlist(message);
+                    this.updateCardlist(message);
                   }
                   const toast = this.toastCtrl.create({
                     message: message,
@@ -73,7 +72,19 @@ export class CardlistPage {
             });
         }
 
+      ionViewWillEnter() {
+        this.loadCards()
+      }
+
+      loadCards() {
+        this.carddata.getCards().subscribe(data =>{
+          this.cards = data;
+        })
+      }
+
       doRefresh(refresher: Refresher) {
+        this.carddata.clearCache();
+        this.loadCards();
         this.mqtt.readCards();
           setTimeout(() => {
             refresher.complete();
@@ -88,50 +99,33 @@ export class CardlistPage {
         toast.present();
       }
 
-      goToCard(card: any, id: String) {
-        console.log("pushing for carddetails of card.id=" + id);
-        this.navCtrl.push(CarddetailPage, { card: card, id: id });      
+      goToCard(card: any, taskId: String) {
+        console.log("pushing for carddetails of card.taskId=" + taskId);
+        this.navCtrl.push(CarddetailPage, { card: card, taskId: taskId });      
       }
 
-      updateProductlist(cards: String) {
-        this.cards = [];
-        if(cards.charAt(cards.length-1) === ',') {
-          cards = cards.substring(7, cards.length-1);
+      updateCardlist(newcards: String) {
+        if(newcards.charAt(newcards.length-1) === ',') {
+          newcards = newcards.substring(7, newcards.length-1);
         } else {         
-           cards = cards.substring(7);
+          newcards = newcards.substring(7);
         }
-        console.log("CARDS=" + cards);
-        cards.split(",")
+        console.log("CARDS=" + newcards);
+        newcards.split(",")
         .map((val: string) => {
-          this.cards.push({
-            "id": val
-          }) 
+          if(this.cards.filter(card => (card.taskId === val)).length == 0) {
+            this.cards.push({
+              "taskId": val
+            }) 
+          }
         });  
         this.showToast() 
       }
 
   filterCards() {
-    this.cards = this.filter(this.queryText);
-  }
-
-  filter(querytext = '') {
-        let queryWords = querytext.split(' ').filter(w => !!w.trim().length);
-        return this.carddata.getCards().filter(card => {
-          let matchesQueryText = false;
-          if (queryWords.length) {
-            // of any query word is in the session name than it passes the query test
-            queryWords.forEach((queryWord: string) => {
-              var target = card.surname + card.givenname + card.email;
-              if (target.toLowerCase().indexOf(queryWord.toLowerCase()) > -1) {
-                matchesQueryText = true;
-              }
-            });
-          } else {
-            // if there are no query words then this session passes the query test
-            matchesQueryText = true;
-          }
-          return matchesQueryText;
-        });
+    this.carddata.getCards(this.queryText).subscribe(data => {
+      this.cards = data;
+    });
   }
 
   openModal () {

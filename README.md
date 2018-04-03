@@ -5,6 +5,7 @@ This is a simple Ionic app for our version of the [coffeemaker payment system](h
 After installing the [Ionic3 CLI](https://ionicframework.com/docs/intro/installation/), just clone this repository and start a local webserver by typing
 
 ```shell
+npm install
 ionic serve
 ```
 

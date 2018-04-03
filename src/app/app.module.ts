@@ -24,6 +24,7 @@ import { AuthService, AuthServiceProvider } from './auth.service'
 import { Sigv4Http, Sigv4HttpProvider } from './sigv4.service'
 import { LoginModal } from '../modal/login/login'
 import { LogoutModal } from '../modal/logout/logout'
+import { UserStore, UserStoreProvider } from './user.store'
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import { LogoutModal } from '../modal/logout/logout'
     HttpModule,
     IonicModule.forRoot(MyApp, new AwsConfig().load(), {
       links: [
-        { component: CarddetailPage, name: 'CardDetail', segment: 'card/:id' },
+        { component: CarddetailPage, name: 'CardDetail', segment: 'card/:taskId' },
         { component: ProductdetailPage, name: 'ProductDetail', segment: 'product/:id' }
       ]
     }),
@@ -66,6 +67,7 @@ import { LogoutModal } from '../modal/logout/logout'
     AuthServiceProvider,
     Sigv4Http, 
     Sigv4HttpProvider,
+    UserStore, UserStoreProvider,
     StatusBar,
     ProductData,
     CardData,

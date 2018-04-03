@@ -5,27 +5,27 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/concatAll'
 import 'rxjs/add/operator/share'
 import { List } from 'immutable'
-import { ITask } from './task.interface'
+import { IUser } from './user.interface'
 import { AuthService } from './auth.service'
 import * as moment from 'moment'
 import * as _orderBy from 'lodash.orderby'
 import { Sigv4Http } from './sigv4.service'
 import { Config } from 'ionic-angular'
 
-let taskStoreFactory = (sigv4: Sigv4Http, auth: AuthService, config: Config) => { return new TaskStore(sigv4, auth, config) }
+let userStoreFactory = (sigv4: Sigv4Http, auth: AuthService, config: Config) => { return new UserStore(sigv4, auth, config) }
 
-export let TaskStoreProvider = {
-  provide: TaskStore,
-  useFactory: taskStoreFactory,
+export let UserStoreProvider = {
+  provide: UserStore,
+  useFactory: userStoreFactory,
   deps: [Sigv4Http, AuthService]
 }
 
 const displayFormat = 'YYYY-MM-DD'
 
 @Injectable()
-export class TaskStore {
+export class UserStore {
 
-  private _tasks: BehaviorSubject<List<ITask>> = new BehaviorSubject(List([]))
+  private _tasks: BehaviorSubject<List<IUser>> = new BehaviorSubject(List([]))
   private endpoint:string
 
   constructor (private sigv4: Sigv4Http, private auth: AuthService, private config: Config) {
@@ -52,7 +52,7 @@ export class TaskStore {
     }
   }
 
-  addTask (task): Observable<ITask> {
+  addTask (task): Observable<IUser> {
     let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, 'tasks', task, creds)).concatAll().share()
 
     observable.subscribe(resp => {
@@ -66,20 +66,20 @@ export class TaskStore {
     return observable.map(resp => resp.status === 200 ? resp.json().task : null)
   }
 
-  deleteTask (index): Observable<ITask> {
+  deleteTask (index): Observable<IUser> {
     let tasks = this._tasks.getValue().toArray()
     let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `tasks/${tasks[index].taskId}`, creds)).concatAll().share()
 
     obs.subscribe(resp => {
       if (resp.status === 200) {
         tasks.splice(index, 1)[0]
-        this._tasks.next(List(<ITask[]>tasks))
+        this._tasks.next(List(<IUser[]>tasks))
       }
     })
     return obs.map(resp => resp.status === 200 ? resp.json().task : null)
   }
 
-  completeTask (index): Observable<ITask> {
+  updateTask (index): Observable<IUser> {
     let tasks = this._tasks.getValue().toArray()
     let obs = this.auth.getCredentials().map(creds => this.sigv4.put(
       this.endpoint,
@@ -97,7 +97,7 @@ export class TaskStore {
     return obs.map(resp => resp.status === 200 ? resp.json().task : null)
   }
 
-  private sort (tasks:ITask[]): ITask[] {
-    return _orderBy(tasks, ['completed', 'due'], ['asc', 'asc'])
+  private sort (tasks:IUser[]): IUser[] {
+    return _orderBy(tasks, ['surname'], ['asc'])
   }
 }

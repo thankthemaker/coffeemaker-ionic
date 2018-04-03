@@ -6,7 +6,7 @@
 
 // AWS Mobile Hub Project Constants
 var aws_cloud_logic = 'enable';
-var aws_cloud_logic_custom = '[{"id":"ccvdjtfe43","name":"TasksAPI","description":"","endpoint":"https://ccvdjtfe43.execute-api.us-east-1.amazonaws.com/Development","region":"us-east-1","paths":["/tasks","/tasks/123"]},{"id":"fdbw74nfli","name":"ProjectsAPI","description":"","endpoint":"https://fdbw74nfli.execute-api.us-east-1.amazonaws.com/Development","region":"us-east-1","paths":["/projects","/projects/123"]}]';
+var aws_cloud_logic_custom = '[{"id":"ccvdjtfe43","name":"TasksAPI","description":"","endpoint":"https://ccvdjtfe43.execute-api.us-east-1.amazonaws.com/Development","region":"us-east-1","paths":["/tasks","/tasks/123"]},{"id":"fdbw74nfli","name":"ProjectsAPI","description":"","endpoint":"https://fdbw74nfli.execute-api.us-east-1.amazonaws.com/Development","region":"us-east-1","paths":["/projects","/projects/123"]},{"id":"4pchade7cb","name":"UsersAPI","description":"API for the Users DyanmoDB Table","endpoint":"https://4pchade7cb.execute-api.us-east-1.amazonaws.com/Development","region":"us-east-1","paths":["/users","/users/123"]}]';
 var aws_cognito_identity_pool_id = 'us-east-1:0062afe3-3fa5-4119-9434-81d7ffaaa1a7';
 var aws_cognito_region = 'us-east-1';
 var aws_content_delivery = 'enable';
@@ -16,7 +16,7 @@ var aws_content_delivery_cloudfront = 'enable';
 var aws_content_delivery_cloudfront_domain = 'd2an3bf5h6bze3.cloudfront.net';
 var aws_dynamodb = 'enable';
 var aws_dynamodb_all_tables_region = 'us-east-1';
-var aws_dynamodb_table_schemas = [{"tableName":"ionicsampleapp-mobilehub-363308685-projects","attributes":[{"name":"projectId","type":"S"},{"name":"month","type":"S"}],"indexes":[],"region":"us-east-1","hashKey":"projectId","rangeKey":"month"},{"tableName":"ionicsampleapp-mobilehub-363308685-tasks","attributes":[{"name":"userId","type":"S"},{"name":"taskId","type":"S"}],"indexes":[],"region":"us-east-1","hashKey":"userId","rangeKey":"taskId"}];
+var aws_dynamodb_table_schemas = [{"tableName":"ionicsampleapp-mobilehub-363308685-users","attributes":[{"name":"userId","type":"S"},{"name":"email","type":"S"},{"name":"givenname","type":"S"},{"name":"paymethod","type":"S"},{"name":"surname","type":"S"}],"indexes":[],"region":"us-east-1","hashKey":"userId"},{"tableName":"ionicsampleapp-mobilehub-363308685-projects","attributes":[{"name":"projectId","type":"S"},{"name":"month","type":"S"}],"indexes":[],"region":"us-east-1","hashKey":"projectId","rangeKey":"month"},{"tableName":"ionicsampleapp-mobilehub-363308685-tasks","attributes":[{"name":"userId","type":"S"},{"name":"taskId","type":"S"}],"indexes":[],"region":"us-east-1","hashKey":"userId","rangeKey":"taskId"}];
 var aws_project_id = 'a10835c5-4767-4195-8d0b-e7e8c3b26f0e';
 var aws_project_name = 'ionic-sample-app';
 var aws_project_region = 'us-east-1';
