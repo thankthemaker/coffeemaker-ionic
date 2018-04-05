@@ -1,5 +1,6 @@
 <ion-tabs>
-  <ion-tab [root]="tab1Root" tabTitle="Karten" tabIcon="card"></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="Produkte" tabIcon="cafe"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="Einstellungen" tabIcon="settings"></ion-tab>
+  <ion-tab [root]="tab0Root" tabTitle="Statistik" tabIcon="stats"></ion-tab>
+  <ion-tab [root]="tab1Root" tabTitle="Produkte" tabIcon="cafe"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="Karten" tabIcon="card" *ngIf="auth.isUserSignedIn()"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="Einstellungen" tabIcon="settings" *ngIf="auth.isUserSignedIn()"></ion-tab>
 </ion-tabs>

@@ -3,7 +3,6 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable'
-import { CacheService } from 'ionic-cache';
 import { UserStore } from '../app/user.store'
 import { IUser } from '../app/user.interface'
 
@@ -12,15 +11,13 @@ export class CardData {
 
   constructor(
     public http: Http,
-    public cache: CacheService,
     private userStore: UserStore) {}
-
 
   getCards(queryText = '') {
     queryText = queryText.toLowerCase().replace(/,|\.|-/g, ' ');
     let queryWords = queryText.split(' ').filter(w => !!w.trim().length);
-    let request = this.userStore.tasks;
-    return this.cache.loadFromDelayedObservable("cards", request, 'cards')
+    let request = this.userStore.cards;
+    return request
     .map((data: any) => {
      return data.filter(card => {
       let matchesQueryText = false;
@@ -39,9 +36,5 @@ export class CardData {
       return matchesQueryText;
     });
   }); 
-  }
-
-  clearCache() {
-    this.cache.clearGroup('cards');
   }
 }

@@ -25,17 +25,17 @@ const displayFormat = 'YYYY-MM-DD'
 @Injectable()
 export class UserStore {
 
-  private _tasks: BehaviorSubject<List<IUser>> = new BehaviorSubject(List([]))
+  private _cards: BehaviorSubject<List<IUser>> = new BehaviorSubject(List([]))
   private endpoint:string
 
   constructor (private sigv4: Sigv4Http, private auth: AuthService, private config: Config) {
     this.endpoint = this.config.get('APIs')['TasksAPI']
-    this.auth.signoutNotification.subscribe(() => this._tasks.next(List([])))
+    this.auth.signoutNotification.subscribe(() => this._cards.next(List([])))
     this.auth.signinNotification.subscribe(() => this.refresh() )
     this.refresh()
   }
 
-  get tasks () { return Observable.create( fn => this._tasks.subscribe(fn) ) }
+  get cards () { return Observable.create( fn => this._cards.subscribe(fn) ) }
 
   refresh () : Observable<any> {
     if (this.auth.isUserSignedIn()) {
@@ -43,61 +43,61 @@ export class UserStore {
       observable.subscribe(resp => {
         console.log(resp)
         let data = resp.json()
-        this._tasks.next(List(this.sort(data.tasks)))
+        this._cards.next(List(this.sort(data.tasks)))
       })
       return observable
     } else {
-      this._tasks.next(List([]))
+      this._cards.next(List([]))
       return Observable.from([])
     }
   }
 
-  addTask (task): Observable<IUser> {
-    let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, 'tasks', task, creds)).concatAll().share()
+  addTask (card): Observable<IUser> {
+    let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, 'tasks', card, creds)).concatAll().share()
 
     observable.subscribe(resp => {
       if (resp.status === 200) {
-        let tasks = this._tasks.getValue().toArray()
-        let task = resp.json().task
-        tasks.push(task)
-        this._tasks.next(List(this.sort(tasks)))
+        let cards = this._cards.getValue().toArray()
+        let card = resp.json().card
+        cards.push(card)
+        this._cards.next(List(this.sort(cards)))
       }
     })
-    return observable.map(resp => resp.status === 200 ? resp.json().task : null)
+    return observable.map(resp => resp.status === 200 ? resp.json().card : null)
   }
 
   deleteTask (index): Observable<IUser> {
-    let tasks = this._tasks.getValue().toArray()
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `tasks/${tasks[index].taskId}`, creds)).concatAll().share()
+    let cards = this._cards.getValue().toArray()
+    let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `tasks/${cards[index].taskId}`, creds)).concatAll().share()
 
     obs.subscribe(resp => {
       if (resp.status === 200) {
-        tasks.splice(index, 1)[0]
-        this._tasks.next(List(<IUser[]>tasks))
+        cards.splice(index, 1)[0]
+        this._cards.next(List(<IUser[]>cards))
       }
     })
-    return obs.map(resp => resp.status === 200 ? resp.json().task : null)
+    return obs.map(resp => resp.status === 200 ? resp.json().card : null)
   }
 
   updateTask (index): Observable<IUser> {
-    let tasks = this._tasks.getValue().toArray()
+    let cards = this._cards.getValue().toArray()
     let obs = this.auth.getCredentials().map(creds => this.sigv4.put(
       this.endpoint,
-      `tasks/${tasks[index].taskId}`,
+      `tasks/${cards[index].taskId}`,
       {completed: true, completedOn: moment().format(displayFormat)},
       creds)).concatAll().share()
 
     obs.subscribe(resp => {
       if (resp.status === 200) {
-        tasks[index] = resp.json().task
-        this._tasks.next(List(this.sort(tasks)))
+        cards[index] = resp.json().card
+        this._cards.next(List(this.sort(cards)))
       }
     })
 
-    return obs.map(resp => resp.status === 200 ? resp.json().task : null)
+    return obs.map(resp => resp.status === 200 ? resp.json().card : null)
   }
 
-  private sort (tasks:IUser[]): IUser[] {
-    return _orderBy(tasks, ['surname'], ['asc'])
+  private sort (cards:IUser[]): IUser[] {
+    return _orderBy(cards, ['surname'], ['asc'])
   }
 }

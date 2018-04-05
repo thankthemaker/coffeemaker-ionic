@@ -17,7 +17,7 @@ export class CarddetailPage {
 
   card: any = {};
 
-  task:IUser = {
+  newcard:IUser = {
     surname:"",
     givenname:"",
     email:"",
@@ -33,22 +33,22 @@ export class CarddetailPage {
     }
 
     ionViewWillEnter() {
-      console.log("Showing details for card " + this.navParams.data.taskId);  
+      console.log("Showing details for card " + this.navParams.data.cardId);  
       this.card = this.navParams.data.card;  
       console.log(JSON.stringify(this.card));
     }
 
     updateCard() {
 
-      this.task.taskId = this.card.taskId;
-      this.task.givenname = this.card.givenname ;
-      this.task.surname = this.card.surname;
-      this.task.email = this.card.email;
-      this.task.paymethod = this.card.paymethod;
+      this.newcard.taskId = this.card.cardId;
+      this.newcard.givenname = this.card.givenname ;
+      this.newcard.surname = this.card.surname;
+      this.newcard.email = this.card.email;
+      this.newcard.paymethod = this.card.paymethod;
 
-        this.userStore.addTask(this.task).subscribe(task => {
-          if (task) {
-            this.presentToast('task updated' + task.taskId)
+        this.userStore.addTask(this.newcard).subscribe(card => {
+          if (card) {
+            this.presentToast('card updated' + card.taskId)
           } else {
             console.log('Could not add user. Please see logs')
           }

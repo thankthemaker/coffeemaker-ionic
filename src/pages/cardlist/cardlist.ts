@@ -20,7 +20,7 @@ export class CardlistPage {
   private queryText = '';  
   private RESPONSE_TOPIC: string = "/coffeemaker/gigax8/fromCoffeemaker";
 
-  cards: any =  [];
+  cards: any = [];
   
   constructor(public navCtrl: NavController,
     public mqtt: MQTTService,
@@ -72,18 +72,21 @@ export class CardlistPage {
             });
         }
 
-      ionViewWillEnter() {
+      ionViewDidLoad() {
         this.loadCards()
       }
 
-      loadCards() {
+        loadCards() {
         this.carddata.getCards().subscribe(data =>{
-          this.cards = data;
+          this.cards = [];
+          data.forEach(element => {
+            this.cards.push(element);
+          });
         })
       }
 
       doRefresh(refresher: Refresher) {
-        this.carddata.clearCache();
+        //this.carddata.clearCache();
         this.loadCards();
         this.mqtt.readCards();
           setTimeout(() => {
@@ -113,7 +116,9 @@ export class CardlistPage {
         console.log("CARDS=" + newcards);
         newcards.split(",")
         .map((val: string) => {
-          if(this.cards.filter(card => (card.taskId === val)).length == 0) {
+          console.log("cards:" + JSON.stringify(this.cards));
+          console.log("size:" + this.cards.filter(card => (card.taskId === val)).length);
+          if(this.cards.filter(card => (card.taskId === val)).length === 0) {
             this.cards.push({
               "taskId": val
             }) 

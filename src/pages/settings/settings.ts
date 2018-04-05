@@ -3,6 +3,9 @@ import { NavController } from 'ionic-angular';
 import {MQTTService} from '../../core/mqttservice';
 
 import { AuthService } from '../../app/auth.service'
+import { ModalController } from 'ionic-angular'
+import { LoginModal } from '../../modal/login/login'
+import { LogoutModal } from '../../modal/logout/logout'
 
 @Component({
   selector: 'page-settings',
@@ -12,7 +15,8 @@ export class SettingsPage {
 
   constructor(public navCtrl: NavController,
     private auth: AuthService,
-    public mqtt: MQTTService) {
+    public mqtt: MQTTService,
+    public modalCtrl: ModalController) {
   }
 
   readCards() {
@@ -46,4 +50,12 @@ export class SettingsPage {
   startOTAUpdate() {
     this.mqtt.startOTAUpdate();
   }
+
+  openModal () {
+    let modal = this.modalCtrl.create(this.auth.isUserSignedIn() ? LogoutModal : LoginModal)
+    modal.present()
+  }
+  
+  get userColor():string { return this.auth.isUserSignedIn() ? 'secondary' : 'dark' }
+
 }

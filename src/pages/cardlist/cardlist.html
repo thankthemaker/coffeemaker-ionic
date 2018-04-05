@@ -16,7 +16,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding="true">
+<ion-content padding="true" *ngIf="auth.isUserSignedIn()">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content>Zum Aktuallisieren ziehen</ion-refresher-content>
   </ion-refresher>
@@ -28,7 +28,17 @@
       <ion-badge item-end>1 EUR</ion-badge>        
     </ion-item>
   </ion-list>
+
   <ion-list-header [hidden]="cards.length > 0">
     Keine Karten registriert.
-</ion-list-header>
+  </ion-list-header>
+</ion-content>
+
+
+<ion-content *ngIf="!auth.isUserSignedIn()">
+    <ion-card  color="light">
+        <ion-card-content>
+         Du musst angemeldet sein um Karten administrieren zu können.
+        </ion-card-content>
+    </ion-card>
 </ion-content>

@@ -1,13 +1,18 @@
 <ion-header>
     <ion-navbar>
         <ion-title>Einstellungen</ion-title>      
-    </ion-navbar>
+        <ion-buttons start>
+            <button ion-button icon-only clear (click)="openModal()" [color]="userColor">
+              <ion-icon name="person"></ion-icon>
+            </button>
+          </ion-buttons>
+       </ion-navbar>
 </ion-header>
 
 <ion-content *ngIf="!auth.isUserSignedIn()">
     <ion-card  color="light">
         <ion-card-content>
-         Sie müssen angemeldet sein um Einstellungen verändern zu können.
+         Du musst angemeldet sein um Einstellungen verändern zu können.
         </ion-card-content>
     </ion-card>
 </ion-content>

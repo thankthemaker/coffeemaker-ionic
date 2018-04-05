@@ -7,6 +7,9 @@ import { ProductdetailPage } from '../productdetail/productdetail';
 import {MQTTService} from '../../core/mqttservice';
 
 import { AuthService } from '../../app/auth.service'
+import { ModalController } from 'ionic-angular'
+import { LoginModal } from '../../modal/login/login'
+import { LogoutModal } from '../../modal/logout/logout'
 
 @Component({
   selector: 'page-pricelist',
@@ -20,7 +23,8 @@ export class PricelistPage {
     public navCtrl: NavController,
     private auth: AuthService,
     public mqtt: MQTTService,
-    public productData: ProductData) {
+    public productData: ProductData,
+    public modalCtrl: ModalController) {
       this.productData.getProducts().subscribe((data: any) => {
         this.products = data;
       });
@@ -36,7 +40,6 @@ export class PricelistPage {
     }
 
     doRefresh(refresher: Refresher) {
-      this.productData.clearCache();
       this.productData.getProducts().subscribe((data: any) => {
         this.products = data;
       });        setTimeout(() => {
@@ -46,5 +49,13 @@ export class PricelistPage {
 
     reorderItem(indexes) {
     }
+
+    openModal () {
+      let modal = this.modalCtrl.create(this.auth.isUserSignedIn() ? LogoutModal : LoginModal)
+      modal.present()
+    }
+    
+    get userColor():string { return this.auth.isUserSignedIn() ? 'secondary' : 'dark' }
+  
 }
 

@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { ProductdetailPage } from '../pages/productdetail/productdetail';
 import { CarddetailPage } from '../pages/carddetail/carddetail';
 import { PricelistPage } from '../pages/pricelist/pricelist';
+import { StatisticsPage } from '../pages/statistics/statistics';
 import { SettingsPage } from '../pages/settings/settings';
 import { CardlistPage } from '../pages/cardlist/cardlist';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -19,6 +20,7 @@ import { HttpModule } from '@angular/http';
 import { ProductData } from '../core/product-data-provider';
 import { CardData } from '../core/card-data-provider';
 
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AwsConfig } from './app.config'
 import { AuthService, AuthServiceProvider } from './auth.service'
 import { Sigv4Http, Sigv4HttpProvider } from './sigv4.service'
@@ -34,6 +36,7 @@ import { UserStore, UserStoreProvider } from './user.store'
     LogoutModal,
     ProductdetailPage,
     CarddetailPage,
+    StatisticsPage,
     PricelistPage,
     SettingsPage,
     CardlistPage,
@@ -42,6 +45,7 @@ import { UserStore, UserStoreProvider } from './user.store'
   imports: [
     BrowserModule,
     HttpModule,
+    ChartsModule,
     IonicModule.forRoot(MyApp, new AwsConfig().load(), {
       links: [
         { component: CarddetailPage, name: 'CardDetail', segment: 'card/:taskId' },
@@ -57,6 +61,7 @@ import { UserStore, UserStoreProvider } from './user.store'
     LogoutModal,
     CarddetailPage,
     ProductdetailPage,
+    StatisticsPage,
     PricelistPage,
     SettingsPage,
     CardlistPage,
