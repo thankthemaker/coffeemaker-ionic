@@ -6,27 +6,27 @@
 
 // AWS Mobile Hub Project Constants
 var aws_cloud_logic = 'enable';
-var aws_cloud_logic_custom = '[{"id":"ccvdjtfe43","name":"TasksAPI","description":"","endpoint":"https://ccvdjtfe43.execute-api.us-east-1.amazonaws.com/Development","region":"us-east-1","paths":["/tasks","/tasks/123"]},{"id":"fdbw74nfli","name":"ProjectsAPI","description":"","endpoint":"https://fdbw74nfli.execute-api.us-east-1.amazonaws.com/Development","region":"us-east-1","paths":["/projects","/projects/123"]},{"id":"4pchade7cb","name":"UsersAPI","description":"API for the Users DyanmoDB Table","endpoint":"https://4pchade7cb.execute-api.us-east-1.amazonaws.com/Development","region":"us-east-1","paths":["/users","/users/123"]}]';
-var aws_cognito_identity_pool_id = 'us-east-1:0062afe3-3fa5-4119-9434-81d7ffaaa1a7';
-var aws_cognito_region = 'us-east-1';
+var aws_cloud_logic_custom = '[{"id":"icvv53mi3i","name":"Coffee","description":"","endpoint":"https://icvv53mi3i.execute-api.eu-central-1.amazonaws.com/Development","region":"eu-central-1","paths":["/coffees","/coffees/123"]},{"id":"h0kibubpp6","name":"Card","description":"","endpoint":"https://h0kibubpp6.execute-api.eu-central-1.amazonaws.com/Development","region":"eu-central-1","paths":["/cards","/cards/123"]}]';
+var aws_cognito_identity_pool_id = 'eu-central-1:bc2800e6-e443-4fa2-9cd1-efda00815ee3';
+var aws_cognito_region = 'eu-central-1';
 var aws_content_delivery = 'enable';
-var aws_content_delivery_bucket = 'ionicsampleapp-hosting-mobilehub-363308685';
-var aws_content_delivery_bucket_region = 'us-east-1';
+var aws_content_delivery_bucket = 'coffeemaker-hosting-mobilehub-691613612';
+var aws_content_delivery_bucket_region = 'eu-central-1';
 var aws_content_delivery_cloudfront = 'enable';
-var aws_content_delivery_cloudfront_domain = 'd2an3bf5h6bze3.cloudfront.net';
+var aws_content_delivery_cloudfront_domain = 'd2bf3jb0m72y3w.cloudfront.net';
 var aws_dynamodb = 'enable';
-var aws_dynamodb_all_tables_region = 'us-east-1';
-var aws_dynamodb_table_schemas = [{"tableName":"ionicsampleapp-mobilehub-363308685-users","attributes":[{"name":"userId","type":"S"},{"name":"email","type":"S"},{"name":"givenname","type":"S"},{"name":"paymethod","type":"S"},{"name":"surname","type":"S"}],"indexes":[],"region":"us-east-1","hashKey":"userId"},{"tableName":"ionicsampleapp-mobilehub-363308685-projects","attributes":[{"name":"projectId","type":"S"},{"name":"month","type":"S"}],"indexes":[],"region":"us-east-1","hashKey":"projectId","rangeKey":"month"},{"tableName":"ionicsampleapp-mobilehub-363308685-tasks","attributes":[{"name":"userId","type":"S"},{"name":"taskId","type":"S"}],"indexes":[],"region":"us-east-1","hashKey":"userId","rangeKey":"taskId"}];
-var aws_project_id = 'a10835c5-4767-4195-8d0b-e7e8c3b26f0e';
-var aws_project_name = 'ionic-sample-app';
-var aws_project_region = 'us-east-1';
-var aws_resource_bucket_name = 'ionicsampleapp-deployments-mobilehub-363308685';
-var aws_resource_name_prefix = 'ionicsampleapp-mobilehub-363308685';
+var aws_dynamodb_all_tables_region = 'eu-central-1';
+var aws_dynamodb_table_schemas = [{"tableName":"coffeemaker-mobilehub-691613612-coffee","attributes":[{"name":"cardId","type":"S"},{"name":"timestamp","type":"N"},{"name":"userId","type":"S"}],"indexes":[],"region":"eu-central-1","hashKey":"cardId","rangeKey":"timestamp"},{"tableName":"coffeemaker-mobilehub-691613612-cards","attributes":[{"name":"userId","type":"S"},{"name":"cardId","type":"S"}],"indexes":[],"region":"eu-central-1","hashKey":"userId","rangeKey":"cardId"}];
+var aws_project_id = '284e5bc4-452d-4a8e-bff0-c49b32677c22';
+var aws_project_name = 'coffeemaker';
+var aws_project_region = 'eu-central-1';
+var aws_resource_bucket_name = 'coffeemaker-deployments-mobilehub-691613612';
+var aws_resource_name_prefix = 'coffeemaker-mobilehub-691613612';
 var aws_sign_in_enabled = 'enable';
 var aws_user_pools = 'enable';
-var aws_user_pools_id = 'us-east-1_aYo8VbJol';
+var aws_user_pools_id = 'eu-central-1_uw9fILjMv';
 var aws_user_pools_mfa_type = 'OFF';
-var aws_user_pools_web_client_id = '313dcp38tig6o3ei3ib4ocnm11';
+var aws_user_pools_web_client_id = '767s22a9vjc7qopt2su5qpmv07';
 
 AWS.config.region = aws_project_region;
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({

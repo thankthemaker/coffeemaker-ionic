@@ -21,9 +21,9 @@
     <ion-refresher-content>Zum Aktuallisieren ziehen</ion-refresher-content>
   </ion-refresher>
   <ion-list [hidden]="cards.length === 0">
-    <ion-item *ngFor="let card of cards" (click)="goToCard(card, card.taskId)">
+    <ion-item *ngFor="let card of cards" (click)="goToCard(card, card.cardId)">
       <ion-icon name="card" item-start></ion-icon>
-      <h2>{{card.taskId}}</h2>
+      <h2>{{card.cardId}}</h2>
       <p>{{card.givenname}} {{card.surname}} ({{card.email}})</p>
       <ion-badge item-end>1 EUR</ion-badge>        
     </ion-item>

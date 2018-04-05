@@ -40,15 +40,15 @@ export class CarddetailPage {
 
     updateCard() {
 
-      this.newcard.taskId = this.card.cardId;
+      this.newcard.cardId = this.card.cardId;
       this.newcard.givenname = this.card.givenname ;
       this.newcard.surname = this.card.surname;
       this.newcard.email = this.card.email;
       this.newcard.paymethod = this.card.paymethod;
 
-        this.userStore.addTask(this.newcard).subscribe(card => {
+        this.userStore.addCard(this.newcard).subscribe(card => {
           if (card) {
-            this.presentToast('card updated' + card.taskId)
+            this.presentToast('Karte gespeichert: ' + card.cardId)
           } else {
             console.log('Could not add user. Please see logs')
           }

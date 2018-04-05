@@ -54,12 +54,13 @@ export class CardlistPage {
                   console.log("Received message on topic [" + topic + "]: "  + message);
                   if(message.startsWith("CARDS:")) {
                     this.updateCardlist(message);
+                  } else {
+                    const toast = this.toastCtrl.create({
+                      message: message,
+                      duration: 3000
+                    });
+                    toast.present();                    
                   }
-                  const toast = this.toastCtrl.create({
-                    message: message,
-                    duration: 3000
-                  });
-                  toast.present();
                 });
             });
         }
@@ -94,17 +95,17 @@ export class CardlistPage {
           }, 1000);
       }
 
-      showToast() {
+      showToast(count) {
         const toast = this.toastCtrl.create({
-          message: 'Einträge aktuallisiert',
+          message: count + ' neue Karten gefunden.',
           duration: 3000
         });
         toast.present();
       }
 
-      goToCard(card: any, taskId: String) {
-        console.log("pushing for carddetails of card.taskId=" + taskId);
-        this.navCtrl.push(CarddetailPage, { card: card, taskId: taskId });      
+      goToCard(card: any, cardId: String) {
+        console.log("pushing for carddetails of card.cardId=" + cardId);
+        this.navCtrl.push(CarddetailPage, { card: card, cardId: cardId });      
       }
 
       updateCardlist(newcards: String) {
@@ -114,17 +115,19 @@ export class CardlistPage {
           newcards = newcards.substring(7);
         }
         console.log("CARDS=" + newcards);
+        let count = 0;
         newcards.split(",")
         .map((val: string) => {
           console.log("cards:" + JSON.stringify(this.cards));
-          console.log("size:" + this.cards.filter(card => (card.taskId === val)).length);
-          if(this.cards.filter(card => (card.taskId === val)).length === 0) {
+          console.log("size:" + this.cards.filter(card => (card.cardId === val)).length);
+          if(this.cards.filter(card => (card.cardId === val)).length === 0) {
+            count++;
             this.cards.push({
-              "taskId": val
+              "cardId": val
             }) 
           }
         });  
-        this.showToast() 
+        this.showToast(count) 
       }
 
   filterCards() {

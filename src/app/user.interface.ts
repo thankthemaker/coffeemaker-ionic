@@ -1,5 +1,5 @@
 export interface IUser {
-  taskId?:string
+  cardId?:string
   surname:string
   givenname:string
   email:string

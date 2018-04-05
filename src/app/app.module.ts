@@ -48,7 +48,7 @@ import { UserStore, UserStoreProvider } from './user.store'
     ChartsModule,
     IonicModule.forRoot(MyApp, new AwsConfig().load(), {
       links: [
-        { component: CarddetailPage, name: 'CardDetail', segment: 'card/:taskId' },
+        { component: CarddetailPage, name: 'CardDetail', segment: 'card/:cardId' },
         { component: ProductdetailPage, name: 'ProductDetail', segment: 'product/:id' }
       ]
     }),

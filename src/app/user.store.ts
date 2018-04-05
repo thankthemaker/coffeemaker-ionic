@@ -29,7 +29,7 @@ export class UserStore {
   private endpoint:string
 
   constructor (private sigv4: Sigv4Http, private auth: AuthService, private config: Config) {
-    this.endpoint = this.config.get('APIs')['TasksAPI']
+    this.endpoint = this.config.get('APIs')['Card']
     this.auth.signoutNotification.subscribe(() => this._cards.next(List([])))
     this.auth.signinNotification.subscribe(() => this.refresh() )
     this.refresh()
@@ -39,11 +39,11 @@ export class UserStore {
 
   refresh () : Observable<any> {
     if (this.auth.isUserSignedIn()) {
-      let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'tasks', creds)).concatAll().share()
+      let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'cards', creds)).concatAll().share()
       observable.subscribe(resp => {
         console.log(resp)
         let data = resp.json()
-        this._cards.next(List(this.sort(data.tasks)))
+        this._cards.next(List(this.sort(data.cards)))
       })
       return observable
     } else {
@@ -52,8 +52,8 @@ export class UserStore {
     }
   }
 
-  addTask (card): Observable<IUser> {
-    let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, 'tasks', card, creds)).concatAll().share()
+  addCard (card): Observable<IUser> {
+    let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, 'cards', card, creds)).concatAll().share()
 
     observable.subscribe(resp => {
       if (resp.status === 200) {
@@ -66,9 +66,9 @@ export class UserStore {
     return observable.map(resp => resp.status === 200 ? resp.json().card : null)
   }
 
-  deleteTask (index): Observable<IUser> {
+  deleteCard (index): Observable<IUser> {
     let cards = this._cards.getValue().toArray()
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `tasks/${cards[index].taskId}`, creds)).concatAll().share()
+    let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `cards/${cards[index].cardId}`, creds)).concatAll().share()
 
     obs.subscribe(resp => {
       if (resp.status === 200) {
@@ -79,11 +79,11 @@ export class UserStore {
     return obs.map(resp => resp.status === 200 ? resp.json().card : null)
   }
 
-  updateTask (index): Observable<IUser> {
+  updateCard (index): Observable<IUser> {
     let cards = this._cards.getValue().toArray()
     let obs = this.auth.getCredentials().map(creds => this.sigv4.put(
       this.endpoint,
-      `tasks/${cards[index].taskId}`,
+      `cards/${cards[index].cardId}`,
       {completed: true, completedOn: moment().format(displayFormat)},
       creds)).concatAll().share()
 
