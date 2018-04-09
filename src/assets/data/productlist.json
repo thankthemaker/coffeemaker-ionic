@@ -1,39 +1,39 @@
 [
   {
     "id": 1,
-    "name": "Kaffee",
-    "description": "Normaler Kaffee",
-    "image": "assets/imgs/resize_Kaffee_1.png",
+    "name": "Americano",
+    "description": "125ml • stark",
+    "image": "assets/imgs/resize_Americano.png",
     "price": "20",
     "productCode" : "PAA"
   },
   {
     "id": 2,
-    "name": "Americano",
-    "description": "125ml • stark",
-    "image": "assets/imgs/resize_Americano.png",
+    "name": "Kaffee groß",
+    "description": "Großer Kaffee",
+    "image": "assets/imgs/resize_Kaffee_1.png",
     "price": "20",
     "productCode" : "PAB"
   },
   {
     "id": 3,
-    "name": "Ristretto",
-    "description": "25 ml • sehr stark",
-    "image": "assets/imgs/resize_Ristretto_1.png",
+    "name": "Espresso",
+    "description": "",
+    "image": "assets/imgs/resize_Espresso_1.png",
     "price": "20",
     "productCode" : "PAC"
   },
   {
     "id": 4,
-    "name": "Latte Macchiato",
-    "description": "55 ml Espresso •  Milch •  Milchschaum",
-    "image": "assets/imgs/resize_Latte_macchiato_long_1.png",
-    "price": "40",
+    "name": "Heißes Wasser",
+    "description": "",
+    "image": "assets/imgs/resize_Heisswasser_long.png",
+    "price": "0",
     "productCode" : "PAD"
   },
   {
     "id": 5,
-    "name": "Cappuccino",
+    "name": "Cappuccino groß",
     "description": "50 ml Espresso • Milch • Milchschaum",
     "image": "assets/imgs/resize_Cappuccino_1.png",
     "price": "40",
@@ -41,10 +41,10 @@
   },
   {
     "id": 6,
-    "name": "Flat white",
+    "name": "Kaffee",
     "description": "",
-    "image": "assets/imgs/resize_Flat_white_1.png",
-    "price": "40",
+    "image": "assets/imgs/resize_Kaffee_1.png",
+    "price": "20",
     "productCode" : "PAF"
   },
   {
@@ -57,25 +57,17 @@
   },
   {
     "id": 8,
-    "name": "Heißes Wasser",
-    "description": "",
-    "image": "assets/imgs/resize_Heisswasser_long.png",
+    "name": "Latte Macchiato",
+    "description": "55 ml Espresso •  Milch •  Milchschaum",
+    "image": "assets/imgs/resize_Latte_macchiato_long_1.png",
     "price": "40",
     "productCode" : "PAH"
   },
-  {
+{
     "id": 9,
-    "name": "Milchschaum",
-    "description": "Portion Milchschaum",
-    "image": "assets/imgs/resize_Milchschaum_long.png",
-    "price": "40",
-    "productCode" : "PAJ"
-  },
-  {
-    "id": 10,
-    "name": "Milch",
-    "description": "Portion Milch",
-    "image": "assets/imgs/resize_Milk_portion.png",
+    "name": "Sonstiges",
+    "description": "Sonstiges Produkt",
+    "image": "assets/imgs/resize_Ristretto_1.png",
     "price": "40",
     "productCode" : "PAJ"
   }

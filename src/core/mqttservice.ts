@@ -148,4 +148,8 @@ export class MQTTService {
       startOTAUpdate() {
         this.publish(this.COMMAND_TOPIC, "UPDATE");                
       }
-}
+
+      restart() {
+        this.publish(this.COMMAND_TOPIC, "RESTART");                
+      }
+ }

@@ -3,8 +3,8 @@ import { IonicPage, NavController,ToastController,  NavParams } from 'ionic-angu
 import UUID from 'uuid'
 
 import { AuthService } from '../../app/auth.service'
-import { UserStore } from '../../app/user.store'
-import { IUser } from '../../app/user.interface'
+import { CardStore } from '../../app/card.store'
+import { ICard } from '../../app/card.interface'
 
 @IonicPage({
   segment: 'card'
@@ -17,7 +17,7 @@ export class CarddetailPage {
 
   card: any = {};
 
-  newcard:IUser = {
+  newcard:ICard = {
     surname:"",
     givenname:"",
     email:"",
@@ -26,7 +26,7 @@ export class CarddetailPage {
 
   constructor(
       private auth: AuthService,
-      private userStore: UserStore,
+      private cardStore: CardStore,
       public navCtrl: NavController, 
       public toastCtrl: ToastController,
       public navParams: NavParams) {
@@ -46,7 +46,7 @@ export class CarddetailPage {
       this.newcard.email = this.card.email;
       this.newcard.paymethod = this.card.paymethod;
 
-        this.userStore.addCard(this.newcard).subscribe(card => {
+        this.cardStore.addCard(this.newcard).subscribe(card => {
           if (card) {
             this.presentToast('Karte gespeichert: ' + card.cardId)
           } else {

@@ -1,4 +1,4 @@
-export interface IUser {
+export interface ICard {
   cardId?:string
   surname:string
   givenname:string

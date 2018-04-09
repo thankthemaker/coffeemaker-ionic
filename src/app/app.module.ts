@@ -26,7 +26,8 @@ import { AuthService, AuthServiceProvider } from './auth.service'
 import { Sigv4Http, Sigv4HttpProvider } from './sigv4.service'
 import { LoginModal } from '../modal/login/login'
 import { LogoutModal } from '../modal/logout/logout'
-import { UserStore, UserStoreProvider } from './user.store'
+import { CardStore, CardStoreProvider } from './card.store'
+import { CoffeeStore, CoffeeStoreProvider } from './coffee.store'
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { UserStore, UserStoreProvider } from './user.store'
     AuthServiceProvider,
     Sigv4Http, 
     Sigv4HttpProvider,
-    UserStore, UserStoreProvider,
+    CardStore, CardStoreProvider,
+    CoffeeStore, CoffeeStoreProvider,
     StatusBar,
     ProductData,
     CardData,

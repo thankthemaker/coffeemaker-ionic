@@ -5,27 +5,27 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/concatAll'
 import 'rxjs/add/operator/share'
 import { List } from 'immutable'
-import { IUser } from './user.interface'
+import { ICard } from './card.interface'
 import { AuthService } from './auth.service'
 import * as moment from 'moment'
 import * as _orderBy from 'lodash.orderby'
 import { Sigv4Http } from './sigv4.service'
 import { Config } from 'ionic-angular'
 
-let userStoreFactory = (sigv4: Sigv4Http, auth: AuthService, config: Config) => { return new UserStore(sigv4, auth, config) }
+let cardStoreFactory = (sigv4: Sigv4Http, auth: AuthService, config: Config) => { return new CardStore(sigv4, auth, config) }
 
-export let UserStoreProvider = {
-  provide: UserStore,
-  useFactory: userStoreFactory,
+export let CardStoreProvider = {
+  provide: CardStore,
+  useFactory: cardStoreFactory,
   deps: [Sigv4Http, AuthService]
 }
 
 const displayFormat = 'YYYY-MM-DD'
 
 @Injectable()
-export class UserStore {
+export class CardStore {
 
-  private _cards: BehaviorSubject<List<IUser>> = new BehaviorSubject(List([]))
+  private _cards: BehaviorSubject<List<ICard>> = new BehaviorSubject(List([]))
   private endpoint:string
 
   constructor (private sigv4: Sigv4Http, private auth: AuthService, private config: Config) {
@@ -52,7 +52,7 @@ export class UserStore {
     }
   }
 
-  addCard (card): Observable<IUser> {
+  addCard (card): Observable<ICard> {
     let observable = this.auth.getCredentials().map(creds => this.sigv4.post(this.endpoint, 'cards', card, creds)).concatAll().share()
 
     observable.subscribe(resp => {
@@ -66,20 +66,20 @@ export class UserStore {
     return observable.map(resp => resp.status === 200 ? resp.json().card : null)
   }
 
-  deleteCard (index): Observable<IUser> {
+  deleteCard (index): Observable<ICard> {
     let cards = this._cards.getValue().toArray()
     let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `cards/${cards[index].cardId}`, creds)).concatAll().share()
 
     obs.subscribe(resp => {
       if (resp.status === 200) {
         cards.splice(index, 1)[0]
-        this._cards.next(List(<IUser[]>cards))
+        this._cards.next(List(<ICard[]>cards))
       }
     })
     return obs.map(resp => resp.status === 200 ? resp.json().card : null)
   }
 
-  updateCard (index): Observable<IUser> {
+  updateCard (index): Observable<ICard> {
     let cards = this._cards.getValue().toArray()
     let obs = this.auth.getCredentials().map(creds => this.sigv4.put(
       this.endpoint,
@@ -97,7 +97,7 @@ export class UserStore {
     return obs.map(resp => resp.status === 200 ? resp.json().card : null)
   }
 
-  private sort (cards:IUser[]): IUser[] {
+  private sort (cards:ICard[]): ICard[] {
     return _orderBy(cards, ['surname'], ['asc'])
   }
 }

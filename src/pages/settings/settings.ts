@@ -51,6 +51,10 @@ export class SettingsPage {
     this.mqtt.startOTAUpdate();
   }
 
+  restart() {
+    this.mqtt.restart();
+  }
+
   openModal () {
     let modal = this.modalCtrl.create(this.auth.isUserSignedIn() ? LogoutModal : LoginModal)
     modal.present()

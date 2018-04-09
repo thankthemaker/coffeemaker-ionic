@@ -3,20 +3,20 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable'
-import { UserStore } from '../app/user.store'
-import { IUser } from '../app/user.interface'
+import { CardStore } from '../app/card.store'
+import { ICard } from '../app/card.interface'
 
 @Injectable()
 export class CardData {
 
   constructor(
     public http: Http,
-    private userStore: UserStore) {}
+    private cardStore: CardStore) {}
 
   getCards(queryText = '') {
     queryText = queryText.toLowerCase().replace(/,|\.|-/g, ' ');
     let queryWords = queryText.split(' ').filter(w => !!w.trim().length);
-    let request = this.userStore.cards;
+    let request = this.cardStore.cards;
     return request
     .map((data: any) => {
      return data.filter(card => {

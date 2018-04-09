@@ -23,5 +23,9 @@
     <button ion-button full outline (click)="readCards()">Karten einlesen</button>
     <button ion-button full outline (click)="readPricelist()">Preise einlesen</button>
     <button ion-button full outline (click)="registerNewCards()">Neue Karten registrieren</button>
-    <button ion-button full outline color="danger" (click)="startOTAUpdate()">Firmwareupdate starten</button>
 </ion-content>
+
+<ion-footer *ngIf="auth.isUserSignedIn()">
+    <button ion-button full color="danger" (click)="restart()">Neustart durchführen</button>
+    <button ion-button full color="danger" (click)="startOTAUpdate()">Firmwareupdate starten</button>
+</ion-footer>

@@ -6,6 +6,12 @@ import { ModalController } from 'ionic-angular'
 import { LoginModal } from '../../modal/login/login'
 import { LogoutModal } from '../../modal/logout/logout'
 
+import { CoffeeStore } from '../../app/coffee.store'
+import { ICoffee } from '../../app/coffee.interface'
+
+import * as _values from 'lodash.values'
+import * as _reduce from 'lodash.reduce'
+
 /**
  * Generated class for the StatisticsPage page.
  *
@@ -26,21 +32,40 @@ export class StatisticsPage {
   public projectChartType:string = 'doughnut'
 
   total = 0;
-  coffees: any = [
-    { 'type': 'Espresso', "count": 10 },
-    { 'type': 'Latte Macchiatto', "count": 23 },
-    { 'type': 'Milchkaffee', "count": 21 },
-    { 'type': 'Americano', "count": 3 } ];
+  coffees: any = [];
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private auth: AuthService,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    public coffeestore: CoffeeStore) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad StatisticsPage');
-    this.createCharts();
+
+    this.coffeestore.coffees
+    .subscribe(data =>{
+      this.coffees = [];
+      data.forEach(element => {
+        this.coffees.push(
+          { 
+            "type": element.payload.product,
+            "count": 1 
+          }
+        );
+      });
+
+      this.coffees = _values(_reduce(this.coffees,function(result,obj){
+        result[obj.type] = {
+          type: obj.type,
+          count:obj.count + (result[obj.type]?result[obj.type].count:0)
+        };
+        return result;
+      },{}));
+
+      this.createCharts();
+    });
   }
 
   public createCharts() {
