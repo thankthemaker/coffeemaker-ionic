@@ -37,6 +37,7 @@
     "ionicons": "3.0.0",
     "jwt-decode": "^2.2.0",
     "lodash.groupby": "^4.6.0",
+    "lodash.orderby": "^4.6.0",
     "lodash.map": "^4.6.0",
     "lodash.reduce": "^4.6.0",
     "lodash.values": "^4.3.0",
