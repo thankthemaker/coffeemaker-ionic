@@ -31,7 +31,8 @@ export class MQTTService {
             host: 'mqtt.thank-the-maker.org',
             port: 9001,
             username: 'dgey',
-            password: 'test'
+            password: 'test',
+            useSSL: true
         });
 
         this._client.on('connect', () => {

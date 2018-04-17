@@ -22,7 +22,8 @@
   </ion-refresher>
   <ion-list [hidden]="cards.length === 0">
     <ion-item *ngFor="let card of cards" (click)="goToCard(card, card.cardId)">
-      <ion-icon name="card" item-start></ion-icon>
+      <ion-icon name="card" item-start *ngIf="card.device != 'phone'"></ion-icon>
+      <ion-icon name="phone-portrait" item-start *ngIf="card.device === 'phone'"></ion-icon>
       <h2>{{card.cardId}}</h2>
       <p>{{card.givenname}} {{card.surname}} ({{card.email}})</p>
       <ion-badge item-end>1 EUR</ion-badge>        

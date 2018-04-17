@@ -10,6 +10,7 @@ import { ModalController } from 'ionic-angular'
 import { LoginModal } from '../../modal/login/login'
 import { LogoutModal } from '../../modal/logout/logout'
 
+
 @Component({
   selector: 'page-cardlist',
   templateUrl: 'cardlist.html'

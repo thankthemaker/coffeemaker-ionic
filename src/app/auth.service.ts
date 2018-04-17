@@ -7,6 +7,8 @@ import { Subject } from 'rxjs/Subject'
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/observable/from'
 
+import * as jwtdecode from 'jwt-decode';
+
 let authServiceFactory = (config: AppConfig) => { return new AuthService(config) }
 
 export let AuthServiceProvider = {
@@ -39,6 +41,20 @@ export class AuthService {
   get cognitoUser (): CognitoUser { return this._cognitoUser }
   get currentIdentity (): string { return AWS.config.credentials.identityId }
   isUserSignedIn (): boolean { return this._cognitoUser !== null }
+  isUserInGroup(group: String): boolean {
+    if (this._cognitoUser != null) {
+      return this._cognitoUser.getSession(function(err, session) {
+            if (err) {
+                return false;
+            }
+            var sessionIdInfo = jwtdecode(session.getIdToken().jwtToken);
+            let groups = sessionIdInfo['cognito:groups'];
+            console.log("Cognito groups: " + groups);
+            return groups != null && sessionIdInfo['cognito:groups'].indexOf(group) != -1;
+          });
+        }
+  }
+
 
   private refreshOrResetCreds () {
     this._cognitoUser = this.userPool.getCurrentUser()

@@ -27,6 +27,6 @@
    </ion-list>
 </ion-content>
 
-<ion-footer *ngIf="auth.isUserSignedIn()">
+<ion-footer *ngIf="auth.isUserSignedIn() && auth.isUserInGroup('admin')">
         <button ion-button full outline (click)="updatePricelist()">Preisliste aktuallisieren</button>
 </ion-footer>

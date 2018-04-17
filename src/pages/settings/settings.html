@@ -9,15 +9,15 @@
        </ion-navbar>
 </ion-header>
 
-<ion-content *ngIf="!auth.isUserSignedIn()">
+<ion-content *ngIf="!auth.isUserSignedIn() || !auth.isUserInGroup('admin')">
     <ion-card  color="light">
         <ion-card-content>
-         Du musst angemeldet sein um Einstellungen verändern zu können.
+         Du musst angemeldet sein und über Administrator-Berechtigungen verfügen um Einstellungen verändern zu können.
         </ion-card-content>
     </ion-card>
 </ion-content>
 
-<ion-content *ngIf="auth.isUserSignedIn()">
+<ion-content *ngIf="auth.isUserSignedIn() && auth.isUserInGroup('admin')">
     <button ion-button full outline (click)="inkassoModeOn()">Inkassomodus einschalten</button>
     <button ion-button full outline (click)="inkassoModeOff()">Inkassomodus ausschalten</button>
     <button ion-button full outline (click)="readCards()">Karten einlesen</button>
@@ -25,7 +25,7 @@
     <button ion-button full outline (click)="registerNewCards()">Neue Karten registrieren</button>
 </ion-content>
 
-<ion-footer *ngIf="auth.isUserSignedIn()">
+<ion-footer *ngIf="auth.isUserSignedIn() && auth.isUserInGroup('admin')">
     <button ion-button full color="danger" (click)="restart()">Neustart durchführen</button>
     <button ion-button full color="danger" (click)="startOTAUpdate()">Firmwareupdate starten</button>
 </ion-footer>
