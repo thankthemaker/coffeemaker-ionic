@@ -11,6 +11,7 @@ import * as moment from 'moment'
 import * as _orderBy from 'lodash.orderby'
 import { Sigv4Http } from './sigv4.service'
 import { Config } from 'ionic-angular'
+import * as log from 'loglevel';
 
 let cardStoreFactory = (sigv4: Sigv4Http, auth: AuthService, config: Config) => { return new CardStore(sigv4, auth, config) }
 
@@ -41,7 +42,7 @@ export class CardStore {
     if (this.auth.isUserSignedIn()) {
       let observable = this.auth.getCredentials().map(creds => this.sigv4.get(this.endpoint, 'cards', creds)).concatAll().share()
       observable.subscribe(resp => {
-        console.log(resp)
+        log.debug(resp)
         let data = resp.json()
         this._cards.next(List(this.sort(data.cards)))
       })

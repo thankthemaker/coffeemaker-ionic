@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { NavController, NavParams, ViewController } from 'ionic-angular'
 import { AuthService } from '../../app/auth.service'
 import { CognitoUser , CognitoUserAttribute } from 'amazon-cognito-identity-js'
+import * as log from 'loglevel';
 
 @Component({
   selector: 'modal-logout',
@@ -16,7 +17,7 @@ export class LogoutModal {
   ionViewDidLoad() {
     this.auth.getCredentials().subscribe(creds => {
       this.auth.cognitoUser['getUserAttributes']((err, results) => {
-        if (err) { return console.log('err getting attrs', err) }
+        if (err) { return log.error('err getting attrs', err) }
         this.attrs = results
       })
     })

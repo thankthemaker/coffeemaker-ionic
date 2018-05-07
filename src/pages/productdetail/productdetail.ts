@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProductData } from '../../core/product-data-provider';
 
 import { AuthService } from '../../app/auth.service'
+import * as log from 'loglevel';
 
 /**
  * Generated class for the ProductdetailPage page.
@@ -31,7 +32,7 @@ export class ProductdetailPage {
     }
 
     ionViewWillEnter() {
-      console.log("Showing details for product " + this.navParams.data.id);    
+      log.debug("Showing details for product " + this.navParams.data.id);    
       this.productData.getProduct(this.navParams.data.id).subscribe((data: any) => {
         this.product = data[0];
       });

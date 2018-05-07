@@ -10,6 +10,7 @@ import { AuthService } from '../../app/auth.service'
 import { ModalController } from 'ionic-angular'
 import { LoginModal } from '../../modal/login/login'
 import { LogoutModal } from '../../modal/logout/logout'
+import * as log from 'loglevel';
 
 @Component({
   selector: 'page-pricelist',
@@ -31,7 +32,7 @@ export class PricelistPage {
     }
 
     updatePricelist() {
-      console.log("Update pricelist requested")
+      log.debug("Update pricelist requested")
       this.mqtt.uploadPricelist(this.products);
     }
 

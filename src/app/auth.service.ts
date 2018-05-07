@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/observable/from'
 
 import * as jwtdecode from 'jwt-decode';
+import * as log from 'loglevel';
 
 let authServiceFactory = (config: AppConfig) => { return new AuthService(config) }
 
@@ -49,7 +50,7 @@ export class AuthService {
             }
             var sessionIdInfo = jwtdecode(session.getIdToken().jwtToken);
             let groups = sessionIdInfo['cognito:groups'];
-            console.log("Cognito groups: " + groups);
+            log.debug("Cognito groups: " + groups);
             return groups != null && sessionIdInfo['cognito:groups'].indexOf(group) != -1;
           });
         }
@@ -100,8 +101,8 @@ export class AuthService {
     let self = this
     return new Promise ((resolve, reject) => {
       self._cognitoUser.getSession((err, session) => {
-        if (err) { console.log('Error refreshing user session', err); return reject(err) }
-        console.log(`${new Date()} - Refreshed session for ${self._cognitoUser.getUsername()}. Valid?: `, session.isValid())
+        if (err) { log.warn('Error refreshing user session', err); return reject(err) }
+        log.info(`${new Date()} - Refreshed session for ${self._cognitoUser.getUsername()}. Valid?: `, session.isValid())
         self.saveCreds(session)
         resolve(session)
       })
@@ -109,7 +110,7 @@ export class AuthService {
   }
 
   private resetCreds (clearCache:boolean = false) {
-    console.log('Resetting credentials for unauth access')
+    log.debug('Resetting credentials for unauth access')
     AWS.config.region = this.config.get('region')
     this._cognitoUser = null
     this.unauthCreds = this.unauthCreds || new AWS.CognitoIdentityCredentials({ IdentityPoolId: this.config.get('identityPool') })
@@ -160,7 +161,7 @@ export class AuthService {
       try {
         self.userPool.signUp(creds.username, creds.password, self.buildAttributes(creds), null, (err, result) => {
           if (err) { return reject(err) }
-          console.log('Register', result)
+          log.debug('Register', result)
           resolve(result.user)
         })
       } catch (e) { reject(e) }
@@ -171,7 +172,7 @@ export class AuthService {
     let cognitoUser = this.getNewCognitoUser(creds)
     return new Promise((resolve, reject) => {
       try {
-        console.log('Confirming...', CognitoUser)
+        log.debug('Confirming...', CognitoUser)
         cognitoUser.confirmRegistration(creds.confcode, true, (err, result) => {
           if (err) { return reject(err) }
           resolve(result.CognitoUser)
@@ -187,7 +188,7 @@ export class AuthService {
       try {
         cognitoUser.authenticateUser(self.authDetails(creds), {
           onSuccess: (session) => {
-            console.log(`Signed in user ${cognitoUser.getUsername()}. Sessiong valid?: `, session.isValid())
+            log.info(`Signed in user ${cognitoUser.getUsername()}. Sessiong valid?: `, session.isValid())
             self.saveCreds(session, cognitoUser)
             self._signinSubject.next(cognitoUser.getUsername())
             resolve(cognitoUser)

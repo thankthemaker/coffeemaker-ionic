@@ -11,6 +11,7 @@ import { ICoffee } from '../../app/coffee.interface'
 
 import * as _values from 'lodash.values'
 import * as _reduce from 'lodash.reduce'
+import * as log from 'loglevel';
 
 /**
  * Generated class for the StatisticsPage page.
@@ -42,7 +43,7 @@ export class StatisticsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad StatisticsPage');
+    log.debug('ionViewDidLoad StatisticsPage');
 
     this.coffeestore.coffees
     .subscribe(data =>{

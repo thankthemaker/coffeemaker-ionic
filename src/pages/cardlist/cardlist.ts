@@ -4,11 +4,13 @@ import { MQTTService } from '../../core/mqttservice';
 import { Platform } from 'ionic-angular';
 import { CarddetailPage } from '../carddetail/carddetail';
 import { CardData } from '../../core/card-data-provider';
+import { MqttMessageProvider } from '../../core/message-provider';
 
 import { AuthService } from '../../app/auth.service'
 import { ModalController } from 'ionic-angular'
 import { LoginModal } from '../../modal/login/login'
 import { LogoutModal } from '../../modal/logout/logout'
+import * as log from 'loglevel';
 
 
 @Component({
@@ -29,16 +31,16 @@ export class CardlistPage {
     public platform: Platform,
     public carddata: CardData,
     private auth: AuthService,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    public messages: MqttMessageProvider) {
       
       this.platform.pause.subscribe(() => {
-                    console.log("Receive event: pause");
+        log.debug("Receive event: pause");
                     mqtt.disconnect();
                 });
         
                 this.platform.resume.subscribe(() => {
-        
-                    console.log("Receive event: resume");
+                  log.debug("Receive event: resume");
                     mqtt.connect();
                 });
         
@@ -46,32 +48,34 @@ export class CardlistPage {
   }
 
   connect() { 
-            this.mqtt.connect(err => {
-                if (err) return;
-                console.log("connect: MQTT connected");
-                this.isConnected = true;
+    this.mqtt.connect();
+    this.mqtt.attachDebugHandlers();
+    this.mqtt.attachMessageHandler((topic: string, payload: any) => {
+      log.debug("Received message on topic [" + topic + "]: "  + payload);
 
-                this.mqtt.subscribe(this.RESPONSE_TOPIC, (topic: string, message: string) => {
-                  console.log("Received message on topic [" + topic + "]: "  + message);
-                  if(message.startsWith("CARDS:")) {
-                    this.updateCardlist(message);
-                  } else {
-                    const toast = this.toastCtrl.create({
-                      message: message,
-                      duration: 3000
-                    });
-                    toast.present();                    
-                  }
-                });
-            });
-        }
+      const message = payload.toString();
+      if(message.startsWith("CARDS:")) {
+        this.updateCardlist(message);
+      } else {
+        this.messages.addMessages(message);
+        const toast = this.toastCtrl.create({
+          message: message,
+          duration: 3000
+        });
+        toast.present();                    
+      }
+    });
+    this.mqtt.subscribe(this.RESPONSE_TOPIC);
+    }
     
-        disconnect() {
-            this.mqtt.disconnect(err => {
+  disconnect() {
+ /*
+          this.mqtt.disconnect(err => {
                 if (err) return;
-                console.log("disconnect: MQTT disconnect");
+                log.debug("disconnect: MQTT disconnect");
                 this.isConnected = false;
             });
+*/
         }
 
       ionViewDidLoad() {
@@ -105,7 +109,7 @@ export class CardlistPage {
       }
 
       goToCard(card: any, cardId: String) {
-        console.log("pushing for carddetails of card.cardId=" + cardId);
+        log.debug("pushing for carddetails of card.cardId=" + cardId);
         this.navCtrl.push(CarddetailPage, { card: card, cardId: cardId });      
       }
 
@@ -115,12 +119,12 @@ export class CardlistPage {
         } else {         
           newcards = newcards.substring(7);
         }
-        console.log("CARDS=" + newcards);
+        log.debug("CARDS=" + newcards);
         let count = 0;
         newcards.split(",")
         .map((val: string) => {
-          console.log("cards:" + JSON.stringify(this.cards));
-          console.log("size:" + this.cards.filter(card => (card.cardId === val)).length);
+          log.debug("cards:" + JSON.stringify(this.cards));
+          log.debug("size:" + this.cards.filter(card => (card.cardId === val)).length);
           if(this.cards.filter(card => (card.cardId === val)).length === 0) {
             count++;
             this.cards.push({

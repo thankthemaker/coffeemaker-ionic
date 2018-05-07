@@ -3,4 +3,5 @@
   <ion-tab [root]="tab1Root" tabTitle="Produkte" tabIcon="cafe"></ion-tab>
   <ion-tab [root]="tab2Root" tabTitle="Karten" tabIcon="card" *ngIf="auth.isUserSignedIn()"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="Einstellungen" tabIcon="settings" *ngIf="auth.isUserSignedIn()"></ion-tab>
+  <ion-tab [root]="tab4Root" tabTitle="Protokoll" tabIcon="book" *ngIf="auth.isUserSignedIn()"></ion-tab>
 </ion-tabs>

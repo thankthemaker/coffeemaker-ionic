@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core'
 import {Http, Request, Response} from '@angular/http'
 import { Observable } from 'rxjs/Observable'
 import * as aws4 from 'aws4'
+import * as log from 'loglevel';
 
 let Sigv4HttpFactory = (http:Http) => { return new Sigv4Http(http) }
 
@@ -67,7 +68,7 @@ export class Sigv4Http {
     if(headers['Content-Type'] === undefined) { headers['Content-Type'] = DEFAULT_TYPE }
     delete headers['Host']
     delete headers['Content-Length']
-    console.log(aws4Sign)
+    log.debug(aws4Sign)
     return this.http.request(new Request(aws4Sign))
   }
 }

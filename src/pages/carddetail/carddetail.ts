@@ -5,6 +5,7 @@ import UUID from 'uuid'
 import { AuthService } from '../../app/auth.service'
 import { CardStore } from '../../app/card.store'
 import { ICard } from '../../app/card.interface'
+import * as log from 'loglevel';
 
 @IonicPage({
   segment: 'card'
@@ -33,9 +34,9 @@ export class CarddetailPage {
     }
 
     ionViewWillEnter() {
-      console.log("Showing details for card " + this.navParams.data.cardId);  
+      log.debug("Showing details for card " + this.navParams.data.cardId);  
       this.card = this.navParams.data.card;  
-      console.log(JSON.stringify(this.card));
+      log.debug(JSON.stringify(this.card));
     }
 
     updateCard() {
@@ -50,7 +51,7 @@ export class CarddetailPage {
           if (card) {
             this.presentToast('Karte gespeichert: ' + card.cardId)
           } else {
-            console.log('Could not add user. Please see logs')
+            log.error('Could not add user. Please see logs')
           }
         })
     }
@@ -61,7 +62,7 @@ export class CarddetailPage {
         duration: 1500,
         position: 'bottom'
       })
-      toast.onDidDismiss(() => { console.log('Dismissed toast') })
+      toast.onDidDismiss(() => { log.debug('Dismissed toast') })
       toast.present()
     }
 }

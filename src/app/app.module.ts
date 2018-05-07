@@ -9,6 +9,7 @@ import { PricelistPage } from '../pages/pricelist/pricelist';
 import { StatisticsPage } from '../pages/statistics/statistics';
 import { SettingsPage } from '../pages/settings/settings';
 import { CardlistPage } from '../pages/cardlist/cardlist';
+import { ProtocolPage } from '../pages/protocol/protocol';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -19,6 +20,7 @@ import {MQTTService} from '../core/mqttservice';
 import { HttpModule } from '@angular/http';
 import { ProductData } from '../core/product-data-provider';
 import { CardData } from '../core/card-data-provider';
+import { MqttMessageProvider } from '../core/message-provider';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AwsConfig } from './app.config'
@@ -40,6 +42,7 @@ import { CoffeeStore, CoffeeStoreProvider } from './coffee.store'
     StatisticsPage,
     PricelistPage,
     SettingsPage,
+    ProtocolPage,
     CardlistPage,
     TabsPage
   ],
@@ -65,6 +68,7 @@ import { CoffeeStore, CoffeeStoreProvider } from './coffee.store'
     StatisticsPage,
     PricelistPage,
     SettingsPage,
+    ProtocolPage,
     CardlistPage,
     TabsPage
   ],
@@ -80,6 +84,7 @@ import { CoffeeStore, CoffeeStoreProvider } from './coffee.store'
     CardData,
     SplashScreen,
     MQTTService,
+    MqttMessageProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

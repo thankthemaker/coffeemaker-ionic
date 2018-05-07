@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { NavController, NavParams, ViewController } from 'ionic-angular'
 import { AuthService } from '../../app/auth.service'
+import * as log from 'loglevel';
 
 @Component({
   selector: 'modal-login',
@@ -21,17 +22,17 @@ export class LoginModal {
     this.auth.signin(this.credentials).then((user) => {
       this.dismiss()
     }).catch((err) => {
-      console.log('error signing in', err)
+      log.error('error signing in', err)
       this.setError(err.message)
     })
   }
 
   register () {
     this.auth.register(this.credentials).then((user) => {
-      console.log('register: success', user)
+      log.info('register: success', user)
       this.page = 'confirm'
     }).catch((err) => {
-      console.log('error registering', err)
+      log.error('error registering', err)
       this.setError(err.message)
     })
   }
@@ -41,7 +42,7 @@ export class LoginModal {
       this.page = 'login'
       this.setMessage('Deine Registrierung wurde bestätigt. Bitte melde Dich an.')
     }).catch((err) => {
-      console.log('error confirming', err)
+      log.error('error confirming', err)
       this.setError(err.message)
     })
   }
