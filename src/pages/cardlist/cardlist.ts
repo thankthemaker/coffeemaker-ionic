@@ -79,6 +79,9 @@ export class CardlistPage {
         }
 
       ionViewDidLoad() {
+        this.auth.getCredentials().subscribe(creds => 
+          this.mqtt.updateWebSocketCredentials(creds.accessKeyId, creds.secretAccessKey, creds.sessionToken)
+           );
         this.loadCards()
       }
 

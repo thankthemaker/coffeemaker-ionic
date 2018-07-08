@@ -22,7 +22,8 @@ export class MQTTService {
             host: this.config.get('iot_host'),
             protocol: this.config.get('iot_protocol'),
             accessKeyId: this.config.get('iot_accessKeyId'),
-            secretKey: this.config.get('iot_secretKey')
+            secretKey: this.config.get('iot_secretKey'),
+            debug: true
         });
       }
 
@@ -40,11 +41,11 @@ export class MQTTService {
         });
     
         this.client.on('error', (err) => {
-            log.error('iot client error', err);
+            log.error('iot client error', JSON.stringify(err));
         });
     
         this.client.on('message', (topic, message) => {
-            log.debug('new message', topic, JSON.parse(message.toString()));
+            //log.debug('new message', topic, JSON.parse(message.toString()));
         });
       }
 

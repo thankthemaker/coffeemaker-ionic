@@ -10,6 +10,7 @@ import { StatisticsPage } from '../pages/statistics/statistics';
 import { SettingsPage } from '../pages/settings/settings';
 import { CardlistPage } from '../pages/cardlist/cardlist';
 import { ProtocolPage } from '../pages/protocol/protocol';
+import { BillingPage } from '../pages/billing/billing';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -44,6 +45,7 @@ import { CoffeeStore, CoffeeStoreProvider } from './coffee.store'
     SettingsPage,
     ProtocolPage,
     CardlistPage,
+    BillingPage,
     TabsPage
   ],
   imports: [
@@ -70,6 +72,7 @@ import { CoffeeStore, CoffeeStoreProvider } from './coffee.store'
     SettingsPage,
     ProtocolPage,
     CardlistPage,
+    BillingPage,
     TabsPage
   ],
   providers: [

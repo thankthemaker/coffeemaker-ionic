@@ -15,6 +15,7 @@ src/assets/aws-config.js
 
 .idea/
 .sourcemaps/
+serverless/.serverless/
 .sass-cache/
 .tmp/
 .versions/
