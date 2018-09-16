@@ -49,4 +49,22 @@
         </ion-row>
       </ion-card>
 
+      <ion-card>
+        <ion-card-header class='card-title'>
+          Kaffee pro Tag
+        </ion-card-header>
+    
+        <ion-card-content no-padding>
+          <canvas *ngIf="lineChartData" baseChart height="180px"
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"></canvas>
+        </ion-card-content>
+    
+    
+        <ion-row no-padding class='card-stats'>
+        </ion-row>
+      </ion-card>
 </ion-content>

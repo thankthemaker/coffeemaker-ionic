@@ -67,9 +67,16 @@ export class CardStore {
     return observable.map(resp => resp.status === 200 ? resp.json().card : null)
   }
 
-  deleteCard (index): Observable<ICard> {
+  deleteCard (cardId: string): Observable<ICard> {
     let cards = this._cards.getValue().toArray()
-    let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `cards/${cards[index].cardId}`, creds)).concatAll().share()
+    let index = 0;
+    for(let card of cards) {
+      index++;
+      if(card.cardId === cardId ) {
+        break;
+      }
+    }
+    let obs = this.auth.getCredentials().map(creds => this.sigv4.del(this.endpoint, `cards/${cardId}`, creds)).concatAll().share()
 
     obs.subscribe(resp => {
       if (resp.status === 200) {

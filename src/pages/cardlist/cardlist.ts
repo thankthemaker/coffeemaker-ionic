@@ -24,6 +24,7 @@ export class CardlistPage {
   private RESPONSE_TOPIC: string = "/coffeemaker/gigax8/fromCoffeemaker";
 
   cards: any = [];
+  cardcount = 0;
   
   constructor(public navCtrl: NavController,
     public mqtt: MQTTService,
@@ -54,7 +55,7 @@ export class CardlistPage {
       log.debug("Received message on topic [" + topic + "]: "  + payload);
 
       const message = payload.toString();
-      if(message.startsWith("CARDS:")) {
+      if(message.startsWith("CARDS")) {
         this.updateCardlist(message);
       } else {
         this.messages.addMessages(message);
@@ -90,6 +91,7 @@ export class CardlistPage {
           this.cards = [];
           data.forEach(element => {
             this.cards.push(element);
+            this.cardcount = this.cards.length;
           });
         })
       }
@@ -103,39 +105,36 @@ export class CardlistPage {
           }, 1000);
       }
 
-      showToast(count) {
+      showToast(newcard) {
         const toast = this.toastCtrl.create({
-          message: count + ' neue Karten gefunden.',
+          message: 'Neue Karte gefunden: ' + newcard,
           duration: 3000
         });
         toast.present();
       }
 
-      goToCard(card: any, cardId: String) {
+      goToCard(card: any, cardId: string) {
         log.debug("pushing for carddetails of card.cardId=" + cardId);
         this.navCtrl.push(CarddetailPage, { card: card, cardId: cardId });      
       }
 
-      updateCardlist(newcards: String) {
-        if(newcards.charAt(newcards.length-1) === ',') {
-          newcards = newcards.substring(7, newcards.length-1);
-        } else {         
-          newcards = newcards.substring(7);
-        }
-        log.debug("CARDS=" + newcards);
+      deleteCard(cardId: string) {
+        log.debug("deleting card: " + cardId);
+        this.mqtt.deleteCard(cardId);
+        this.carddata.deleteCard(cardId);
+      }
+
+      updateCardlist(newcard: string) {
         let count = 0;
-        newcards.split(",")
-        .map((val: string) => {
-          log.debug("cards:" + JSON.stringify(this.cards));
-          log.debug("size:" + this.cards.filter(card => (card.cardId === val)).length);
-          if(this.cards.filter(card => (card.cardId === val)).length === 0) {
-            count++;
-            this.cards.push({
-              "cardId": val
-            }) 
-          }
-        });  
-        this.showToast(count) 
+        newcard = newcard.substr(newcard.indexOf(":")+1);
+        log.debug("new CARD=" + newcard);
+        if(this.cards.filter(card => (card.cardId === newcard)).length === 0) {
+          count++;
+          this.cards.push({
+            "cardId": newcard
+          })
+          this.showToast(newcard)  
+        }
       }
 
   filterCards() {

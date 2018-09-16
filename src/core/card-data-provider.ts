@@ -5,6 +5,7 @@ import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable'
 import { CardStore } from '../app/card.store'
 import { ICard } from '../app/card.interface'
+import { int } from 'aws-sdk/clients/datapipeline';
 
 @Injectable()
 export class CardData {
@@ -24,7 +25,7 @@ export class CardData {
       if (queryWords.length) {
         // of any query word is in the session name than it passes the query test
         queryWords.forEach((queryWord: string) => {
-          var target = card.surname + card.givenname + card.email;
+          var target = card.surname + card.givenname + card.email + card.cardId;
           if (target.toLowerCase().indexOf(queryWord.toLowerCase()) > -1) {
             matchesQueryText = true;
           }
@@ -36,5 +37,9 @@ export class CardData {
       return matchesQueryText;
     });
   }); 
+  }
+
+  deleteCard(index) {
+    this.cardStore.deleteCard(index);  
   }
 }

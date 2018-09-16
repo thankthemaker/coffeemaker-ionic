@@ -1,4 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -31,6 +32,7 @@ import { LoginModal } from '../modal/login/login'
 import { LogoutModal } from '../modal/logout/logout'
 import { CardStore, CardStoreProvider } from './card.store'
 import { CoffeeStore, CoffeeStoreProvider } from './coffee.store'
+import { BillStore, BillStoreProvider } from './bill.store'
 
 
 @NgModule({
@@ -82,6 +84,7 @@ import { CoffeeStore, CoffeeStoreProvider } from './coffee.store'
     Sigv4HttpProvider,
     CardStore, CardStoreProvider,
     CoffeeStore, CoffeeStoreProvider,
+    BillStore, BillStoreProvider,
     StatusBar,
     ProductData,
     CardData,
