@@ -19,25 +19,23 @@
 
 
 <ion-content padding>
-
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>Zum Aktuallisieren ziehen</ion-refresher-content>
+  </ion-refresher>
     <ion-card>
         <ion-card-header class='card-title'>
           Gesamtanzahl Kaffee
         </ion-card-header>
     
         <ion-card-content no-padding>
-          <canvas *ngIf="projectChartLabels" height="150px" baseChart
-            [data]="projectChartData"
-            [legend]="projectChartLegend"
-            [labels]="projectChartLabels"
-            [chartType]="projectChartType"></canvas>
+            <canvas height="150px" baseChart #doughnutCanvas></canvas>
         </ion-card-content>
     
         <ion-row no-padding class='card-stats'>
           <ion-col text-left>
             <button small ion-button icon-left clear color="secondary">
               <ion-icon name="cafe"></ion-icon>
-              {{projectChartLabels?.length}}
+              {{doughnutChartLabels?.length}}
             </button>
           </ion-col>
           <ion-col text-right>
@@ -55,16 +53,17 @@
         </ion-card-header>
     
         <ion-card-content no-padding>
-          <canvas *ngIf="lineChartData" baseChart height="180px"
-            [datasets]="lineChartData"
-            [labels]="lineChartLabels"
-            [options]="lineChartOptions"
-            [legend]="lineChartLegend"
-            [chartType]="lineChartType"></canvas>
-        </ion-card-content>
+            <canvas baseChart height="180px" #lineCanvas></canvas>
+          </ion-card-content>
     
     
         <ion-row no-padding class='card-stats'>
         </ion-row>
       </ion-card>
+
+      <ion-item>
+        <ion-label>Abgerechnete Kaffee einbeziehen</ion-label>
+        <ion-toggle [(ngModel)]="alreadyBilled" (ionChange)="doRefresh()"></ion-toggle>
+      </ion-item>
+
 </ion-content>

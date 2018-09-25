@@ -77,7 +77,8 @@ export class BillingPage {
         });  
         console.log("Coffee Timestamp:" + new Date(element.timestamp).toISOString());
         if(new Date(element.timestamp).toISOString() > this.startdate && 
-           new Date(element.timestamp).toISOString() < this.enddate) {
+           new Date(element.timestamp).toISOString() < this.enddate &&
+           (!element.billstatus || element.billstatus === "")) {
           this.sum += parseFloat(element.payload.price);
           this.coffees.push(
             { 
